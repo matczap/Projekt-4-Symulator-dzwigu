@@ -172,7 +172,7 @@ void MyOnPaint(HDC hdc)
 	Point* pPoints = points;
 
 	graphics.DrawPolygon(&penBlk, pPoints, 4);
-	for(int i = 1; i < 5; i++)
+	for (int i = 1; i < 5; i++)
 		graphics.DrawEllipse(&penBlk, tab[i].x, tab[i].y, tab[i].width, tab[i].height);
 
 	// crane hook
@@ -184,7 +184,7 @@ void MyOnPaint(HDC hdc)
 }
 
 void repaintWindow(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, RECT* drawArea)
-{	
+{
 	RECT hookarea1;
 	if (drawArea == NULL)
 		InvalidateRect(hWnd, NULL, TRUE); // repaint all
@@ -196,7 +196,7 @@ void repaintWindow(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, RECT* drawArea)
 		SetRect(&hookarea1, hook_x - 1, hook_h - 1, hook_w + 1, hook_h + 1);
 		InvalidateRect(hWnd, &hookarea1, TRUE); //repaint drawArea
 	}
-	else if ((drawArea == &drawArea3) && !podnoszony){
+	else if ((drawArea == &drawArea3) && !podnoszony) {
 		SetRect(&hookarea1, hook_x - 1, hook_y, hook_w + 2, hook_h + 1);
 		InvalidateRect(hWnd, &hookarea1, TRUE); //repaint drawArea
 	}
@@ -204,7 +204,7 @@ void repaintWindow(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, RECT* drawArea)
 		SetRect(&hookarea1, hook_x - 1, hook_y, hook_w + 1, hook_h + 1);
 		InvalidateRect(hWnd, &hookarea1, TRUE); //repaint drawArea
 	}
-	else if (podnoszony || drawArea == &drawArea5){
+	else if (podnoszony || drawArea == &drawArea5) {
 		SetRect(&hookarea1, tab[witchFigure].x - 1, hook_y, tab[witchFigure].x + tab[witchFigure].width + 2, hook_h + tab[witchFigure].height + 2);
 		InvalidateRect(hWnd, &hookarea1, TRUE); //repaint drawArea
 	}
@@ -346,7 +346,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	// create button and store the handle                                                       
 
 	hwndButton = CreateWindow(TEXT("button"),                      // The class name required is button
-		TEXT("Start"),                  // the caption of the button
+		TEXT("Start/reset"),                  // the caption of the button
 		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  // the styles
 		750, 0,                                  // the left and top co-ordinates
 		80, 50,                              // width and height
@@ -557,7 +557,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case TMR_1:
 			//force window to repaint
 			repaintWindow(hWnd, hdc, ps, &drawArea1);
-			hook_h--;		
+			hook_h--;
 			if (hook_h <= 90)
 				KillTimer(hWnd, TMR_1);
 			if (podnoszony == TRUE) {
@@ -567,8 +567,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case TMR_2:
 			//force window to repaint
 			repaintWindow(hWnd, hdc, ps, &drawArea2);
-			hook_h++;		
-			if(hook_h >= 500 || hook_h >= hookHeightCheck())
+			hook_h++;
+			if (hook_h >= 500 || hook_h >= hookHeightCheck())
 				KillTimer(hWnd, TMR_2);
 			if (podnoszony == TRUE) {
 				tab[witchFigure].y++;
@@ -579,7 +579,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			repaintWindow(hWnd, hdc, ps, &drawArea3);
 			hook_w--;
 			hook_x--;
-			if(hook_w <= 200 || hookLeftCheck())
+			if (hook_w <= 200 || hookLeftCheck())
 				KillTimer(hWnd, TMR_3);
 			if (podnoszony == TRUE && !figureLeftCheck(hWnd, witchFigure)) {
 				tab[witchFigure].x--;
@@ -600,7 +600,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//force window to repaint
 			repaintWindow(hWnd, hdc, ps, &drawArea5);
 			killtime(hWnd);
-			if(tab[witchFigure].y >= releaseCheck())
+			if (tab[witchFigure].y >= releaseCheck())
 				KillTimer(hWnd, TMR_5);
 			else {
 				//SetTimer(hWnd, TMR_7, 50, 0);
@@ -647,7 +647,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					hook_w--;
 					hook_x--;
 				}
-				if (hook_x < mid){
+				if (hook_x < mid) {
 					hook_x++;
 					hook_w++;
 				}
@@ -717,7 +717,7 @@ bool hookRightCheck() {
 
 bool figureLeftCheck(HWND hWnd1, int f) {
 	for (int i = 0; i < 5; i++)
-		if (i != f && (tab[f].y + tab[f].height > tab[i].y) && (tab[f].x == tab[i].x + tab[i].width)){
+		if (i != f && (tab[f].y + tab[f].height > tab[i].y) && (tab[f].x == tab[i].x + tab[i].width)) {
 			podnoszony = FALSE;
 			SetTimer(hWnd1, TMR_5, 50, 0);
 			return TRUE;
@@ -731,7 +731,7 @@ bool figureRightCheck(HWND hWnd1, int f) {
 			podnoszony = FALSE;
 			SetTimer(hWnd1, TMR_5, 50, 0);
 			return TRUE;
-		}	
+		}
 	return FALSE;
 }
 
@@ -744,7 +744,7 @@ int releaseCheck() {
 		if ((x > tab[i].x) && (x < tab[i].x + tab[i].height))
 			ile++;
 	MAX -= 50 * ile;
-	return MAX-1;
+	return MAX - 1;
 }
 
 bool treeCircle() {
