@@ -50,6 +50,7 @@ RECT drawArea1 = { 0, 0, 0, 0 };
 RECT drawArea2 = { 0, 0, 0, 1 };
 RECT drawArea3 = { 0, 0, 0, 2 };
 RECT drawArea4 = { 0, 0, 0, 3 };
+RECT drawArea5 = { 0, 0, 0, 4 };
 
 // struct
 
@@ -196,10 +197,14 @@ void repaintWindow(HWND hWnd, HDC& hdc, PAINTSTRUCT& ps, RECT* drawArea)
 		InvalidateRect(hWnd, &hookarea1, TRUE); //repaint drawArea
 	}
 	else if ((drawArea == &drawArea3) && !podnoszony){
-		SetRect(&hookarea1, hook_x - 1, hook_y, hook_x + 1, hook_h + 1);
+		SetRect(&hookarea1, hook_x - 1, hook_y, hook_w + 2, hook_h + 1);
 		InvalidateRect(hWnd, &hookarea1, TRUE); //repaint drawArea
 	}
-	else if (podnoszony || drawArea == &drawArea4){
+	else if ((drawArea == &drawArea4) && !podnoszony) {
+		SetRect(&hookarea1, hook_x - 1, hook_y, hook_w + 1, hook_h + 1);
+		InvalidateRect(hWnd, &hookarea1, TRUE); //repaint drawArea
+	}
+	else if (podnoszony || drawArea == &drawArea5){
 		SetRect(&hookarea1, tab[witchFigure].x - 1, hook_y, tab[witchFigure].x + tab[witchFigure].width + 2, hook_h + tab[witchFigure].height + 2);
 		InvalidateRect(hWnd, &hookarea1, TRUE); //repaint drawArea
 	}
@@ -582,7 +587,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case TMR_4:
 			//force window to repaint
-			repaintWindow(hWnd, hdc, ps, &drawArea3);
+			repaintWindow(hWnd, hdc, ps, &drawArea4);
 			hook_w++;
 			hook_x++;
 			if (hook_w >= 650 || hookRightCheck())
@@ -593,7 +598,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case TMR_5:
 			//force window to repaint
-			repaintWindow(hWnd, hdc, ps, &drawArea4);
+			repaintWindow(hWnd, hdc, ps, &drawArea5);
 			killtime(hWnd);
 			if(tab[witchFigure].y >= releaseCheck())
 				KillTimer(hWnd, TMR_5);
