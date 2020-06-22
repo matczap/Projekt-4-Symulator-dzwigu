@@ -16,3 +16,7 @@ Przyciski:
 * **Release** - odczepia hak od aktualnie przenoszonej figury.
 
 ## Realizacja
+Interfejs graficzny systemu Windows z elementami (dźwig, figury geometryczne, elementy ruchome dźwigu) rysowanymi z użyciem GDI+.
+Przemieszczanie liny oraz haka dźwigu zrealizowane za pomoca timera, z aktualizacją jedynie obecnie zmieniającej się części obrazu w celu zminimalizowania efektu migotania wywołanego ponownym rysowaniem widocznej planszy.
+Dane o dostępnych dla użytkownika figurach, zdefiniowanych w strukturze *figure*, zapisywane są w tablicy tych struktur. Nazwa *name* = s oznacza kwadrat, a *name* = c oznacza okrąg.
+Na końcu kodu źródłowego znajdują się funkcje odpowiedzialne za zachowanie warunków danych w zadaniu. Funkcje kończące się członem *Check* odpowiedzialne są za utrzymywanie wszystkich elementów ruchomych w zadanym w programie obszarze roboczym. Funkcja *treeCircle* sprawdza natomiast warunek pozwalający na zbudowanie wieży z maksymalnie trzech elementów o kształcie koła. 
